@@ -1,3 +1,13 @@
+# NextChapterSoftware Changes
+
+We have made some changes in the `NextChapterSoftware` branch to allow for using Azure Asynchronous streaming.
+
+To build the artifacts in that branch:
+```bash
+make maven-local-publish
+mv ./.maven <UNBLOCKED_DIRECTORY>/
+```
+
 # OpenAI API client for Kotlin
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.aallam.openai/openai-client?color=blue&label=Download)](https://central.sonatype.com/namespace/com.aallam.openai)
