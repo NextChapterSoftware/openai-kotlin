@@ -1,0 +1,3 @@
+maven-publish-local:
+	./gradlew publishKotlinMultiplatformPublicationToCustomRepository publishJvmPublicationToCustomRepository
+.PHONY: maven-publish-local

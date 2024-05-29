@@ -1,4 +1,5 @@
 # Gradle
+.maven
 .gradle
 gradlew.bat
 build

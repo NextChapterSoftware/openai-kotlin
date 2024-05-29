@@ -5,6 +5,7 @@ import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -14,6 +15,7 @@ plugins {
     alias(libs.plugins.maven.publish) apply false
     alias(libs.plugins.spotless) apply false
     alias(libs.plugins.dokka)
+    `maven-publish`
 }
 
 subprojects {
@@ -23,6 +25,18 @@ subprojects {
             target("**/*.kt")
             trimTrailingWhitespace()
             endWithNewline()
+        }
+    }
+
+    tasks.withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "17"
+            allWarningsAsErrors = false
         }
     }
 
@@ -45,6 +59,16 @@ subprojects {
 
     tasks.withType<KotlinJsTest>().configureEach {
         environment("LIB_ROOT", rootDir.toString())
+    }
+
+    apply(plugin = "maven-publish")
+    publishing {
+        repositories {
+            maven {
+                name = "custom"
+                url = uri("${rootProject.projectDir}/.maven")
+            }
+        }
     }
 }
 
